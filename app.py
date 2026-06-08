@@ -20,23 +20,24 @@ st.markdown("""
 html, body, [class*="css"] { font-family: 'DM Sans', 'Inter', sans-serif; }
 
 /* ── Sidebar ── */
-[data-testid="stSidebar"] { background: #0f1117; }
+[data-testid="stSidebar"] { background: #f7f8fa; border-right: 1px solid #e5e8ef; }
 [data-testid="stSidebar"] .stSelectbox label,
 [data-testid="stSidebar"] p,
 [data-testid="stSidebar"] h1,
 [data-testid="stSidebar"] h2,
-[data-testid="stSidebar"] h3 { color: #e8eaf0 !important; }
+[data-testid="stSidebar"] h3 { color: #1a1d27 !important; }
 
-/* ── Drug card ── */
+/* ── Drug hero card ── */
 .drug-hero {
-    background: linear-gradient(135deg, #1a1d27 0%, #12151f 100%);
-    border: 1px solid rgba(255,255,255,0.08);
+    background: #ffffff;
+    border: 1.5px solid #e5e8ef;
     border-radius: 14px;
     padding: 24px 28px;
     margin-bottom: 20px;
+    box-shadow: 0 2px 8px rgba(0,0,0,0.05);
 }
-.drug-name { font-size: 28px; font-weight: 600; color: #ffffff; margin: 0 0 4px 0; }
-.drug-generic { font-size: 15px; color: #8b8fa8; margin: 0 0 16px 0; }
+.drug-name { font-size: 28px; font-weight: 700; margin: 0 0 4px 0; }
+.drug-generic { font-size: 15px; color: #5a5f78; margin: 0 0 16px 0; }
 
 /* ── Badges ── */
 .badge {
@@ -49,106 +50,117 @@ html, body, [class*="css"] { font-family: 'DM Sans', 'Inter', sans-serif; }
     margin-bottom: 4px;
     letter-spacing: 0.03em;
 }
-.badge-approved  { background: #0d3a1c; color: #52c77f; border: 1px solid #1a6b35; }
-.badge-pending   { background: #3a2800; color: #f5a623; border: 1px solid #6b4800; }
-.badge-rx        { background: #0d1f3a; color: #4a9eff; border: 1px solid #1a3d6b; }
+.badge-approved { background: #e6f9f0; color: #0d6b35; border: 1px solid #b3e6cc; }
+.badge-pending  { background: #fff8e6; color: #8a5c00; border: 1px solid #ffd980; }
+.badge-rx       { background: #e8f0fb; color: #1a4d9e; border: 1px solid #b3c8f0; }
 
 /* ── Section cards ── */
 .info-card {
-    background: #1a1d27;
-    border: 1px solid rgba(255,255,255,0.07);
+    background: #f7f8fa;
+    border: 1px solid #e5e8ef;
     border-radius: 10px;
-    padding: 18px 20px;
-    margin-bottom: 14px;
+    padding: 16px 18px;
+    margin-bottom: 12px;
     height: 100%;
 }
 .info-card-title {
-    font-size: 11px;
-    font-weight: 600;
-    letter-spacing: 0.08em;
+    font-size: 10px;
+    font-weight: 700;
+    letter-spacing: 0.09em;
     text-transform: uppercase;
-    color: #555a72;
-    margin-bottom: 10px;
+    color: #9098b0;
+    margin-bottom: 8px;
 }
-.info-card-value { font-size: 14px; color: #c8cad8; line-height: 1.65; }
-.info-card-value b { color: #e8eaf0; font-weight: 500; }
-.info-card-value .highlight { color: #52c77f; font-weight: 600; }
-.info-card-value .warn { color: #f5a623; font-weight: 500; }
-.info-card-value .danger { color: #ff6b6b; font-weight: 500; }
+.info-card-value { font-size: 14px; color: #2c3150; line-height: 1.65; }
+.info-card-value b { color: #111827; font-weight: 600; }
+.info-card-value .highlight { color: #0d6b35; font-weight: 600; }
+.info-card-value .warn { color: #a05c00; font-weight: 600; }
+.info-card-value .danger { color: #b91c1c; font-weight: 600; }
 
 /* ── Excipient table ── */
 .excip-table { width: 100%; border-collapse: collapse; font-size: 13px; }
 .excip-table th {
-    background: #12151f;
-    color: #555a72;
+    background: #f0f2f7;
+    color: #6b7280;
     font-size: 10px;
-    font-weight: 600;
+    font-weight: 700;
     letter-spacing: 0.07em;
     text-transform: uppercase;
     padding: 9px 12px;
     text-align: left;
-    border-bottom: 1px solid rgba(255,255,255,0.06);
+    border-bottom: 1.5px solid #d1d5de;
 }
 .excip-table td {
     padding: 9px 12px;
-    color: #c8cad8;
-    border-bottom: 1px solid rgba(255,255,255,0.04);
+    color: #374151;
+    border-bottom: 1px solid #edf0f5;
     vertical-align: top;
-    line-height: 1.5;
+    line-height: 1.6;
 }
+.excip-table tr:nth-child(even) td { background: #fafbfc; }
 .excip-table tr:last-child td { border-bottom: none; }
-.excip-table td b { color: #e8eaf0; }
+.excip-table td b { color: #111827; }
 .excip-role {
     display: inline-block;
     font-size: 10px;
     padding: 2px 8px;
     border-radius: 10px;
-    background: rgba(74,158,255,0.12);
-    color: #4a9eff;
-    font-weight: 500;
+    background: #e8f0fb;
+    color: #1a4d9e;
+    font-weight: 600;
 }
 
 /* ── Trial result box ── */
 .trial-box {
-    background: #0d1f3a;
-    border: 1px solid #1a3d6b;
+    background: #f0f5ff;
+    border: 1px solid #c7d9f5;
+    border-left: 4px solid #3b72d9;
     border-radius: 8px;
     padding: 14px 16px;
     margin-bottom: 10px;
 }
-.trial-box-title { font-size: 12px; font-weight: 600; color: #4a9eff; margin-bottom: 6px; }
-.trial-box-body  { font-size: 13px; color: #c8cad8; line-height: 1.6; }
-.trial-box-stat  { font-size: 22px; font-weight: 600; color: #52c77f; }
-.trial-box-label { font-size: 11px; color: #555a72; }
+.trial-box-title { font-size: 13px; font-weight: 700; color: #1a3d8a; margin-bottom: 6px; }
+.trial-box-body  { font-size: 13px; color: #374151; line-height: 1.65; }
+.trial-box-stat  { font-size: 22px; font-weight: 700; color: #0d6b35; }
+.trial-box-label { font-size: 11px; color: #6b7280; }
 
-/* ── Compare table ── */
-.compare-tbl { width: 100%; border-collapse: collapse; font-size: 12px; }
-.compare-tbl th {
-    padding: 10px 12px;
-    background: #12151f;
-    color: #555a72;
-    font-size: 10px;
-    font-weight: 600;
-    letter-spacing: 0.07em;
-    text-transform: uppercase;
-    border: 1px solid rgba(255,255,255,0.06);
+/* ── Korea landscape table ── */
+.korea-tbl { width: 100%; border-collapse: collapse; font-size: 13px; }
+.korea-tbl th {
+    background: #f0f2f7;
+    color: #374151;
+    font-size: 11px;
+    font-weight: 700;
+    padding: 10px 14px;
     text-align: left;
+    border: 1px solid #d1d5de;
 }
-.compare-tbl td {
-    padding: 9px 12px;
-    border: 1px solid rgba(255,255,255,0.05);
-    color: #c8cad8;
+.korea-tbl td {
+    padding: 9px 14px;
+    color: #374151;
+    border: 1px solid #e5e8ef;
     vertical-align: top;
-    line-height: 1.5;
+    line-height: 1.55;
+    font-size: 13px;
 }
-.compare-tbl tr:hover td { background: rgba(255,255,255,0.02); }
-.best { color: #52c77f; font-weight: 600; }
-.note-cell { font-size: 11px; color: #555a72; }
+.korea-tbl tr:nth-child(even) td { background: #fafbfc; }
+.korea-tbl td b { color: #111827; font-weight: 600; }
+.korea-status-review  { color: #a05c00; font-weight: 600; }
+.korea-status-pending { color: #b91c1c; font-weight: 600; }
+.korea-status-launched { color: #0d6b35; font-weight: 600; }
+.korea-section-header {
+    font-size: 10px;
+    font-weight: 700;
+    letter-spacing: 0.09em;
+    text-transform: uppercase;
+    color: #9098b0;
+    margin: 20px 0 8px 0;
+}
 
 /* ── Misc ── */
-.divider { border-top: 1px solid rgba(255,255,255,0.06); margin: 20px 0; }
-.source-note { font-size: 11px; color: #444860; font-style: italic; }
-.page-header { font-size: 12px; color: #555a72; letter-spacing: 0.06em; text-transform: uppercase; margin-bottom: 6px; }
+.divider { border-top: 1.5px solid #e5e8ef; margin: 20px 0; }
+.source-note { font-size: 11px; color: #9098b0; font-style: italic; }
+.page-header { font-size: 12px; color: #9098b0; letter-spacing: 0.06em; text-transform: uppercase; margin-bottom: 6px; }
 </style>
 """, unsafe_allow_html=True)
 
@@ -514,7 +526,7 @@ with st.sidebar:
     st.markdown("---")
     st.markdown("##### View Mode")
     view_mode = st.radio(
-        "View", ["Drug Profile", "Comparison Table"],
+        "View", ["Drug Profile", "Comparison Table", "🇰🇷 Korea Landscape"],
         label_visibility="collapsed"
     )
     st.markdown("---")
@@ -598,6 +610,237 @@ if view_mode == "Comparison Table":
     st.stop()
 
 # ─────────────────────────────────────────────
+# KOREA LANDSCAPE VIEW
+# ─────────────────────────────────────────────
+if view_mode == "🇰🇷 Korea Landscape":
+    st.markdown('<p class="page-header">Presbyopia Eye Drop · Korea Market Intelligence</p>', unsafe_allow_html=True)
+    st.markdown("## 🇰🇷 Korean Presbyopia Eye Drop Market")
+    st.markdown(
+        "<p style='color:#5a5f78;font-size:14px;margin-bottom:8px;'>"
+        "Current landscape of presbyopia eye drops entering the Korean market — "
+        "MFDS approval status, license chains, and expected launch timeline. "
+        "As of June 2026, <b>no presbyopia eye drop has received MFDS approval yet</b>. "
+        "The market is a virgin territory with an estimated <b>17 million presbyopia patients</b>."
+        "</p>", unsafe_allow_html=True
+    )
+
+    # ── Key market stats ──────────────────────────
+    st.markdown("---")
+    col1, col2, col3, col4 = st.columns(4)
+    for col, num, label in [
+        (col1, "17M", "Estimated presbyopia patients in Korea"),
+        (col2, "0",   "Currently MFDS-approved presbyopia drops"),
+        (col3, "3",   "NDAs under active MFDS review"),
+        (col4, "2026","Expected year of first approval"),
+    ]:
+        col.markdown(f"""
+<div class="info-card" style="text-align:center;">
+  <div class="info-card-title">{label}</div>
+  <div style="font-size:30px;font-weight:700;color:#111827;">{num}</div>
+</div>""", unsafe_allow_html=True)
+
+    # ── Main comparison table ─────────────────────
+    st.markdown("---")
+    st.markdown("### Product-by-product breakdown")
+
+    KOREA_DATA = [
+        {
+            "field": "Company",
+            "YUVEZZI": "광동제약 (Kwangdong Pharma)",
+            "VIZZ": "알보젠코리아 (Alvogen Korea)",
+            "QLOSI": "옵투스제약 (Optus Pharma)",
+            "Pilostar": "대우제약 (Daewoo Pharma)",
+        },
+        {
+            "field": "Product",
+            "YUVEZZI": "유베지 (YUVEZZI)",
+            "VIZZ": "비즈 (VIZZ)",
+            "QLOSI": "클로시 (QLOSI)",
+            "Pilostar": "필로스타 (Pilostar)",
+        },
+        {
+            "field": "Active Ingredient",
+            "YUVEZZI": "Carbachol 2.75% + Brimonidine Tartrate 0.1%",
+            "VIZZ": "Aceclidine 1.44%",
+            "QLOSI": "Pilocarpine HCl 0.4%",
+            "Pilostar": "Pilocarpine HCl 1.0%",
+        },
+        {
+            "field": "MFDS Status",
+            "YUVEZZI": "🟡 NDA under review",
+            "VIZZ": "🟡 NDA under review",
+            "QLOSI": "🔴 NDA not yet filed",
+            "Pilostar": "🟢 Approved (glaucoma) — indication expansion planned",
+        },
+        {
+            "field": "Developer (Originator)",
+            "YUVEZZI": "Tenpoint Therapeutics (UK)",
+            "VIZZ": "LENZ Therapeutics (US)",
+            "QLOSI": "Orasis Pharmaceuticals (US / Israel)",
+            "Pilostar": "In-house (domestic)",
+        },
+        {
+            "field": "License Chain",
+            "YUVEZZI": "Tenpoint → Zhaoke Ophthalmology (HK) → Kwangdong (Korea exclusive)",
+            "VIZZ": "LENZ → Lotus Pharmaceutical (Taiwan) → Alvogen Korea (distribution)",
+            "QLOSI": "Orasis → Optus Pharma (direct Korea license)",
+            "Pilostar": "N/A — domestic manufacturer",
+        },
+        {
+            "field": "Contract Signed",
+            "YUVEZZI": "January 2024",
+            "VIZZ": "May 2025",
+            "QLOSI": "October 2025",
+            "Pilostar": "N/A",
+        },
+        {
+            "field": "MFDS NDA Filed",
+            "YUVEZZI": "September 2025 ✓ (first NDA in Korea for presbyopia)",
+            "VIZZ": "December 2025 ✓",
+            "QLOSI": "Not yet announced as of early 2026",
+            "Pilostar": "Trial planned for indication expansion (2–3 years)",
+        },
+        {
+            "field": "US FDA Approved",
+            "YUVEZZI": "January 28, 2026",
+            "VIZZ": "July 31, 2025",
+            "QLOSI": "October 16, 2023",
+            "Pilostar": "No — domestic product only",
+        },
+        {
+            "field": "Expected Korea Launch",
+            "YUVEZZI": "2026 (earliest — first NDA filed)",
+            "VIZZ": "2026",
+            "QLOSI": "2026 (pending NDA filing)",
+            "Pilostar": "N/A (indication approval ~2028–2029)",
+        },
+        {
+            "field": "Duration",
+            "YUVEZZI": "Up to 8 hours",
+            "VIZZ": "Up to 10 hours",
+            "QLOSI": "Up to 8 hours",
+            "Pilostar": "~4–6 hours",
+        },
+        {
+            "field": "Preservative",
+            "YUVEZZI": "None (PF unit-dose)",
+            "VIZZ": "None (PF unit-dose)",
+            "QLOSI": "None (PF unit-dose)",
+            "Pilostar": "None (PF unit-dose)",
+        },
+        {
+            "field": "Key Differentiator",
+            "YUVEZZI": "Only dual-agent (carbachol + brimonidine); lowest redness rate (2.8%); 12-month safety data",
+            "VIZZ": "Longest duration (10 h); iris-selective miotic; no brow ache; new chemical entity",
+            "QLOSI": "Lowest pilocarpine concentration (0.4%); PRN use possible; well-established FDA safety record",
+            "Pilostar": "Only Korean-made product; existing glaucoma distribution; off-label presbyopia use ongoing",
+        },
+    ]
+
+    # Build HTML table
+    headers = ["Parameter", "유베지 (YUVEZZI)", "비즈 (VIZZ)", "클로시 (QLOSI)", "필로스타 (Pilostar)"]
+    header_html = "".join(f"<th>{h}</th>" for h in headers)
+
+    rows_html = ""
+    status_map = {
+        "YUVEZZI": "korea-status-review",
+        "VIZZ": "korea-status-review",
+        "QLOSI": "korea-status-pending",
+        "Pilostar": "korea-status-launched",
+    }
+
+    for row in KOREA_DATA:
+        cells = f"<td><b>{row['field']}</b></td>"
+        for col_key in ["YUVEZZI", "VIZZ", "QLOSI", "Pilostar"]:
+            val = row.get(col_key, "—")
+            css_class = status_map[col_key] if row["field"] == "MFDS Status" else ""
+            cells += f"<td class='{css_class}'>{val}</td>"
+        rows_html += f"<tr>{cells}</tr>"
+
+    st.markdown(f"""
+<div style="overflow-x:auto;">
+<table class="korea-tbl">
+  <thead><tr>{header_html}</tr></thead>
+  <tbody>{rows_html}</tbody>
+</table>
+</div>
+""", unsafe_allow_html=True)
+
+    # ── Strategic notes ───────────────────────────
+    st.markdown("---")
+    st.markdown("### Strategic context")
+
+    col1, col2 = st.columns(2)
+
+    with col1:
+        st.markdown("""
+<div class="info-card">
+  <div class="info-card-title">🏁 The MFDS approval race</div>
+  <div class="info-card-value">
+    <b>Kwangdong (YUVEZZI)</b> filed first (Sep 2025) and holds the regulatory lead.<br><br>
+    <b>Alvogen Korea (VIZZ)</b> filed second (Dec 2025) — 3 months behind.<br><br>
+    <b>Optus Pharma (QLOSI)</b> has not yet filed — could be 6–12 months behind the leaders.<br><br>
+    <b>Daewoo (Pilostar)</b> is on a completely separate timeline — a domestic clinical trial for indication expansion
+    will take 2–3 years, with approval expected ~2028–2029 at the earliest.<br><br>
+    <span class="warn">First-mover advantage is real — the first MFDS-approved presbyopia drop will
+    establish prescriber habits and pharmacy relationships before competitors enter.</span>
+  </div>
+</div>
+""", unsafe_allow_html=True)
+
+    with col2:
+        st.markdown("""
+<div class="info-card">
+  <div class="info-card-title">💡 Key market dynamics</div>
+  <div class="info-card-value">
+    <b>Duration is the main battleground:</b> VIZZ's 10 h vs YUVEZZI's 8 h vs QLOSI's 8 h.
+    For working-age Korean patients (heavy screen use), duration matters for compliance.<br><br>
+    <b>Side effect profile drives switches:</b> YUVEZZI → lowest redness; VIZZ → least brow ache;
+    QLOSI → lowest pilocarpine dose.<br><br>
+    <b>Reimbursement unresolved:</b> None of the products has been considered for NHI listing yet.
+    If classified as lifestyle/cosmetic, coverage may be limited — significantly affecting market size.<br><br>
+    <b>Daewoo wildcard:</b> Long-term, if the domestic trial succeeds, a Korean-made pilocarpine
+    presbyopia drop can offer lower cost and domestic supply chain independence.
+  </div>
+</div>
+""", unsafe_allow_html=True)
+
+    # ── Timeline ──────────────────────────────────
+    st.markdown("---")
+    st.markdown("### Korea market timeline")
+
+    timeline_events = [
+        ("Jan 2024",  "#0d6b35", "Kwangdong signs Korea exclusive license for YUVEZZI from Zhaoke Ophthalmology"),
+        ("May 2025",  "#1a4d9e", "Alvogen Korea signs distribution license for VIZZ (LENZ → Lotus → Alvogen)"),
+        ("Jul 2025",  "#1a4d9e", "VIZZ receives US FDA approval — strengthens Korea dossier"),
+        ("Sep 2025",  "#0d6b35", "Kwangdong files MFDS NDA for YUVEZZI — first presbyopia NDA in Korea"),
+        ("Oct 2025",  "#a05c00", "Optus Pharma signs license for QLOSI (₩24B contract)"),
+        ("Nov 2025",  "#1a4d9e", "VIZZ MFDS NDA filed by Alvogen Korea"),
+        ("Nov 2025",  "#374151", "Daewoo launches Pilostar as glaucoma treatment; announces presbyopia indication-expansion plan"),
+        ("Jan 2026",  "#0d6b35", "YUVEZZI receives US FDA approval — reinforces Kwangdong MFDS dossier"),
+        ("2026 (est.)","#0d6b35","First MFDS presbyopia approval expected — market opens for the first time"),
+        ("2026–2027", "#1a4d9e", "QLOSI MFDS filing and approval expected — 3-way commercial competition begins"),
+        ("2028–2029", "#374151", "Daewoo indication-expansion trial expected to complete — domestic product enters market"),
+    ]
+
+    for date, color_dot, text in timeline_events:
+        st.markdown(f"""
+<div style="display:flex;gap:14px;align-items:flex-start;margin-bottom:10px;">
+  <div style="flex-shrink:0;width:90px;font-size:11px;font-weight:700;color:#6b7280;padding-top:3px;">{date}</div>
+  <div style="flex-shrink:0;width:10px;height:10px;border-radius:50%;background:{color_dot};margin-top:5px;"></div>
+  <div style="font-size:13px;color:#374151;line-height:1.5;">{text}</div>
+</div>""", unsafe_allow_html=True)
+
+    st.markdown("---")
+    st.markdown(
+        '<p class="source-note">Korea market data sourced from: Korean MFDS (식품의약품안전처) press releases, '
+        'company announcements, PharmKorea (약학정보원), Kwangdong/Alvogen/Optus investor communications, '
+        'and internal research. As of June 2026.</p>',
+        unsafe_allow_html=True
+    )
+    st.stop()
+
+# ─────────────────────────────────────────────
 # SINGLE DRUG PROFILE VIEW
 # ─────────────────────────────────────────────
 d = DRUGS[selected_drug]
@@ -623,13 +866,13 @@ st.markdown(f"""
   <p class="drug-name" style="color:{color}">{d['brand']}</p>
   <p class="drug-generic">{d['generic']}</p>
   {status_badges}
-  <div style="margin-top:14px;font-size:13px;color:#8b8fa8;">
-    <b style="color:#c8cad8">{d['company']}</b> &nbsp;·&nbsp;
-    NDA: <b style="color:#c8cad8">{d['nda_number']}</b> &nbsp;·&nbsp;
-    Type: <b style="color:#c8cad8">{d['application_type']}</b> &nbsp;·&nbsp;
-    Approved: <b style="color:#c8cad8">{d['approval_date']}</b>
+  <div style="margin-top:14px;font-size:13px;color:#6b7280;">
+    <b style="color:#111827">{d['company']}</b> &nbsp;·&nbsp;
+    NDA: <b style="color:#111827">{d['nda_number']}</b> &nbsp;·&nbsp;
+    Type: <b style="color:#111827">{d['application_type']}</b> &nbsp;·&nbsp;
+    Approved: <b style="color:#111827">{d['approval_date']}</b>
   </div>
-  <div style="margin-top:8px;font-size:12px;color:#555a72;font-style:italic">{d['approval_note']}</div>
+  <div style="margin-top:8px;font-size:12px;color:#9098b0;font-style:italic">{d['approval_note']}</div>
 </div>
 """, unsafe_allow_html=True)
 
@@ -648,16 +891,16 @@ with tab1:
 
     col1, col2 = st.columns([1.2, 0.8])
     with col1:
-        st.markdown(info_card("IUPAC Name", f"<code style='font-size:12px;color:#a8b3c8;'>{d['iupac'].replace(chr(10), '<br>')}</code>"), unsafe_allow_html=True)
+        st.markdown(info_card("IUPAC Name", f"<code style='font-size:12px;color:#1a4d9e;background:#f0f5ff;padding:4px 6px;border-radius:4px;'>{d['iupac'].replace(chr(10), '<br>')}</code>"), unsafe_allow_html=True)
         st.markdown(info_card("Molecular Formula",
-            f"<span style='font-size:16px;font-family:monospace;color:#52c77f;'>{d['molecular_formula']}</span>"), unsafe_allow_html=True)
+            f"<span style='font-size:16px;font-family:monospace;color:#0d6b35;font-weight:700;'>{d['molecular_formula']}</span>"), unsafe_allow_html=True)
         st.markdown(info_card("Molecular Weight",
-            f"<span class='highlight' style='font-size:16px;'>{d['molecular_weight']}</span>"), unsafe_allow_html=True)
+            f"<span style='font-size:16px;font-weight:700;color:#111827;'>{d['molecular_weight']}</span>"), unsafe_allow_html=True)
 
     with col2:
         st.markdown(info_card("Drug Class", d['drug_class']), unsafe_allow_html=True)
         st.markdown(info_card("Active Concentration",
-            f"<b>{d['concentration']}</b><br><span style='color:#555a72;font-size:12px;'>{d['free_base_equivalent']}</span>"), unsafe_allow_html=True)
+            f"<b>{d['concentration']}</b><br><span style='color:#6b7280;font-size:12px;'>{d['free_base_equivalent']}</span>"), unsafe_allow_html=True)
         st.markdown(info_card("Prescription Type",
             f"<span class='highlight'>{d['rx_type']}</span>"), unsafe_allow_html=True)
 
@@ -727,7 +970,7 @@ with tab3:
         st.markdown(info_card("Dosage Form", d["dosage_form"]), unsafe_allow_html=True)
         st.markdown(info_card("Storage Conditions", d["storage"]), unsafe_allow_html=True)
         st.markdown(info_card("Approval / Regulatory Status",
-            f"{d['approval_status']}<br><span style='font-size:12px;color:#555a72;'>{d['approval_note']}</span>"), unsafe_allow_html=True)
+            f"{d['approval_status']}<br><span style='font-size:12px;color:#9098b0;'>{d['approval_note']}</span>"), unsafe_allow_html=True)
 
     st.markdown("---")
     st.markdown("#### Regulatory Details")
@@ -761,13 +1004,13 @@ with tab5:
     cols[0].markdown("**Adverse Effect**")
     cols[1].markdown("**Incidence**")
     cols[2].markdown("**Notes**")
-    st.markdown('<div style="border-top:1px solid rgba(255,255,255,0.06);margin-bottom:10px"></div>', unsafe_allow_html=True)
+    st.markdown('<div style="border-top:1.5px solid #e5e8ef;margin-bottom:10px"></div>', unsafe_allow_html=True)
 
     for ae, incidence, note in d["side_effects"]:
         c1, c2, c3 = st.columns([1.2, 0.6, 2.2])
-        c1.markdown(f"<div style='font-size:13px;color:#e8eaf0;padding:4px 0;'>{ae}</div>", unsafe_allow_html=True)
-        c2.markdown(f"<div style='font-size:12px;color:#f5a623;padding:4px 0;'>{incidence}</div>", unsafe_allow_html=True)
-        c3.markdown(f"<div style='font-size:12px;color:#8b8fa8;padding:4px 0;'>{note}</div>", unsafe_allow_html=True)
+        c1.markdown(f"<div style='font-size:13px;color:#111827;font-weight:500;padding:4px 0;'>{ae}</div>", unsafe_allow_html=True)
+        c2.markdown(f"<div style='font-size:12px;color:#a05c00;font-weight:600;padding:4px 0;'>{incidence}</div>", unsafe_allow_html=True)
+        c3.markdown(f"<div style='font-size:12px;color:#5a5f78;padding:4px 0;'>{note}</div>", unsafe_allow_html=True)
 
     st.markdown("---")
     st.markdown("#### Contraindications & Warnings")
