@@ -551,8 +551,7 @@ with st.sidebar:
         "📊 Comparison Table",
         "🔬 PK/PD Studies",
         "📜 Patent Landscape",
-        "🇰🇷 Korea Market",
-        "🌍 Global Market",
+        "📈 Market Trends",
     ], label_visibility="collapsed")
 
     if view_mode == "💊 Drug Profile":
@@ -754,7 +753,10 @@ elif view_mode == "📜 Patent Landscape":
 
     rows=""
     for p in PATENTS:
-        exp_year = int(p["status"].split("until ")[1].split("-")[0].split(" ")[0][:4])
+        # Robustly extract first 4-digit year after "until " regardless of dash type
+        import re as _re
+        year_match = _re.search(r'until (\d{4})', p["status"])
+        exp_year = int(year_match.group(1)) if year_match else 2099
         is_near = exp_year <= 2030
         status_cls = "pat-warn" if is_near else "pat-active"
         note_html = f'<div style="margin-top:6px;font-size:11px;color:#6b7280;font-style:italic">{p["note"]}</div>' if p["note"] else ""
@@ -774,9 +776,207 @@ elif view_mode == "📜 Patent Landscape":
     c3.markdown(info_card("Somerset portfolio (until 2043)","Three patents covering specific gel, low-pH, and solution formulations of pilo + brim combinations. Blocks specific excipient combinations including polyethoxylated castor oil, BAK 0.003–0.02%, and viscosity enhancers 0.1–1%."),unsafe_allow_html=True)
 
 # ─────────────────────────────────────────────
-# VIEW: KOREA MARKET
+# VIEW: MARKET TRENDS (Korea + Global unified)
 # ─────────────────────────────────────────────
-elif view_mode == "🇰🇷 Korea Market":
+elif view_mode == "📈 Market Trends":
+    st.markdown('<p class="page-header">Market Intelligence · Global & Korea</p>',unsafe_allow_html=True)
+    st.markdown("## 📈 Presbyopia Market Trends")
+
+    mk1, mk2 = st.tabs(["🌍 Global Market", "🇰🇷 Korea Market"])
+
+    # ════ GLOBAL TAB ════
+    with mk1:
+        st.markdown("### Global overview")
+        c1,c2,c3,c4 = st.columns(4)
+        for col,(num,unit,lab,cagr,src) in zip([c1,c2,c3,c4],[
+            ("1.8B","people","Global presbyopes (2024)","→ 2.1B by 2030","WHO / Fricke et al. Ophthalmology 2018"),
+            ("$10.2B","USD","Total treatment market (2024)","CAGR 5.5% → $16.8B by 2033","Straits Research 2024"),
+            ("$1.31B","USD","Eye drops segment (2024)","CAGR 9.2% → $2.86B by 2033","Dataintelo 2024"),
+            ("12.8%","CAGR","Pharmacological drugs","Fastest-growing treatment sub-segment","Emergen Research 2025"),
+        ]):
+            col.markdown(f'<div class="mkt-card"><div class="info-card-title">{lab}</div>'
+                         f'<div><span class="mkt-num">{num}</span><span class="mkt-unit">{unit}</span></div>'
+                         f'<div class="mkt-cagr">{cagr}</div>'
+                         f'<div class="mkt-source">{src}</div></div>',unsafe_allow_html=True)
+
+        st.markdown("---")
+        g1,g2 = st.columns([1.2,0.8])
+        with g1:
+            st.markdown("#### Total treatment market trajectory")
+            for yr,val,bar,note in [
+                ("2023","$8.14B",46,"DataM Intelligence"),
+                ("2024","$10.17B",58,"Straits Research"),
+                ("2025","$10.91B",62,"Straits Research (est.)"),
+                ("2028","~$13B",74,"Interpolated"),
+                ("2033","$16.77B",95,"Straits Research forecast"),
+            ]:
+                st.markdown(f'<div style="display:flex;align-items:center;gap:12px;margin-bottom:8px;">'
+                            f'<div style="width:50px;font-size:12px;font-weight:600;color:#374151;">{yr}</div>'
+                            f'<div style="flex:1"><div class="bar-track"><div class="bar-fill" style="width:{bar}%;background:#534AB7;"></div></div></div>'
+                            f'<div style="width:80px;font-size:13px;font-weight:700;color:#111827;">{val}</div>'
+                            f'<div style="font-size:10px;color:#9098b0;">{note}</div></div>',unsafe_allow_html=True)
+
+            st.markdown("#### Eye drops segment only")
+            for yr,val,bar,note in [
+                ("2024","$1.31B",46,"Dataintelo — first meaningful commercial year"),
+                ("2026","~$1.56B",55,"YUVEZZI, VIZZ newly launched"),
+                ("2028","~$1.86B",65,"Estimated"),
+                ("2033","$2.86B",100,"Dataintelo forecast"),
+            ]:
+                st.markdown(f'<div style="display:flex;align-items:center;gap:12px;margin-bottom:8px;">'
+                            f'<div style="width:50px;font-size:12px;font-weight:600;color:#374151;">{yr}</div>'
+                            f'<div style="flex:1"><div class="bar-track"><div class="bar-fill" style="width:{bar}%;background:#0F6E56;"></div></div></div>'
+                            f'<div style="width:80px;font-size:13px;font-weight:700;color:#111827;">{val}</div>'
+                            f'<div style="font-size:10px;color:#9098b0;">{note}</div></div>',unsafe_allow_html=True)
+
+        with g2:
+            st.markdown("#### Regional eye drop share (2024)")
+            for region,pct,val,cagr,col in [
+                ("North America",42,"~$550M","8.5%","#534AB7"),
+                ("Europe",29,"~$380M","~6.0%","#185FA5"),
+                ("Asia Pacific",20,"~$262M","11.2% — fastest","#0F6E56"),
+                ("Rest of World",9,"~$118M","—","#9098b0"),
+            ]:
+                st.markdown(f'<div style="display:flex;align-items:center;gap:10px;margin-bottom:8px;">'
+                            f'<div style="width:110px;font-size:12px;color:#374151;">{region}</div>'
+                            f'<div style="flex:1"><div class="bar-track"><div class="bar-fill" style="width:{pct}%;background:{col};"></div></div></div>'
+                            f'<div style="width:36px;font-size:12px;font-weight:700;color:#111827;">{pct}%</div>'
+                            f'<div style="width:55px;font-size:11px;color:#6b7280;">{val}</div>'
+                            f'<div style="font-size:10px;color:#0d6b35;font-weight:600;">{cagr}</div></div>',unsafe_allow_html=True)
+
+            st.markdown("#### CAGR comparison by segment")
+            for seg,cagr_v,col in [
+                ("Eye drops (pharma)","9.2%","#0F6E56"),
+                ("Pharmacological drugs","12.8%","#0d6b35"),
+                ("Asia Pacific","11.2%","#185FA5"),
+                ("Korea (myo+presby)","11.6%","#A32D2D"),
+                ("Total treatment","5.5%","#534AB7"),
+            ]:
+                pct_f = float(cagr_v.replace("%","").replace("~","").strip())
+                st.markdown(f'<div style="display:flex;align-items:center;gap:10px;margin-bottom:7px;">'
+                            f'<div style="width:160px;font-size:12px;color:#374151;">{seg}</div>'
+                            f'<div style="flex:1"><div class="bar-track"><div class="bar-fill" style="width:{min(pct_f*6,100)}%;background:{col};"></div></div></div>'
+                            f'<div style="font-size:13px;font-weight:700;color:#111827;">{cagr_v}</div></div>',unsafe_allow_html=True)
+
+        st.markdown("---")
+        st.markdown("#### Key market dynamics")
+        dc1,dc2,dc3 = st.columns(3)
+        dc1.markdown(info_card("Demographics","Global population ≥40 growing rapidly. WHO: 1.8B presbyopes 2024 → 2.1B by 2030. Asia Pacific largest absolute numbers; Western markets highest per-capita spending."),unsafe_allow_html=True)
+        dc2.markdown(info_card("Regulatory acceleration","4 FDA-approved drops in 5 years (2021–2026). Phentolamine PDUFA Oct 2026 (5th). Korea, EU, Japan approval races active. Regulatory precedent established → faster pathways for new entrants."),unsafe_allow_html=True)
+        dc3.markdown(info_card("Unmet need","85%+ of presbyopes still use glasses. Pharmacological drops <1% of presbyopia management. The gap is the opportunity — patient education and prescriber behaviour change needed. Reimbursement is key remaining barrier."),unsafe_allow_html=True)
+
+        st.markdown('<p class="source-note">Sources: Straits Research (total market), Dataintelo (eye drops segment), Emergen Research (pharma CAGR), Dataintelo (regional), Grand View Research (Korea), EMR (Korea 2025–2035). WHO / Fricke TR et al. Ophthalmology 2018;125:1492–1499 (global prevalence). June 2026.</p>',unsafe_allow_html=True)
+
+    # ════ KOREA TAB ════
+    with mk2:
+        st.markdown(f"<p style='color:#5a5f78;font-size:14px;margin-bottom:4px;'>As of June 2026, <b>no presbyopia eye drop has received MFDS approval in Korea</b>. The market is pre-commercial, with 3 NDAs under active review.</p>",unsafe_allow_html=True)
+
+        k1,k2,k3,k4 = st.columns(4)
+        for col,num,lab,src in [
+            (k1,"~16–17M","Estimated presbyopia patients","Derived: Korea pop. ≥40 ~30M × WHO prevalence ~55%"),
+            (k2,"0","MFDS-approved presbyopia drops","As of June 2026"),
+            (k3,"3","NDAs under active MFDS review","YUVEZZI, VIZZ, QLOSI"),
+            (k4,"2026","Expected first MFDS approval","Based on Sep 2025 NDA filing"),
+        ]:
+            col.markdown(f'<div class="mkt-card" style="text-align:center"><div class="info-card-title">{lab}</div><div class="mkt-num">{num}</div><div class="mkt-source">{src}</div></div>',unsafe_allow_html=True)
+
+        st.caption(f"⚠️ {MARKET_KOREA['est_basis']}")
+        st.markdown("---")
+
+        # Korea sub-tabs mimicking drug profile structure
+        ks1,ks2,ks3,ks4 = st.tabs(["🏢 Products & Race","📊 Market Size","🚀 Growth Drivers","🗓️ Timeline"])
+
+        with ks1:
+            st.markdown("#### Korea presbyopia product comparison")
+            KOREA_DATA=[
+                ("Company","광동제약 (Kwangdong)","알보젠코리아 (Alvogen Korea)","옵투스제약 (Optus Pharma)","대우제약 (Daewoo Pharma)"),
+                ("Product","유베지 (YUVEZZI)","비즈 (VIZZ)","클로시 (QLOSI)","필로스타 (Pilostar)"),
+                ("Active Ingredient","Carbachol 2.75% + Brimonidine 0.1%","Aceclidine 1.44%","Pilocarpine HCl 0.4%","Pilocarpine HCl 1.0%"),
+                ("MFDS Status","🟡 NDA under review","🟡 NDA under review","🔴 NDA not yet filed","🟢 Approved (glaucoma) — indication expansion planned"),
+                ("Developer","Tenpoint Therapeutics (UK)","LENZ Therapeutics (US)","Orasis Pharmaceuticals (US/Israel)","In-house"),
+                ("License Chain","Tenpoint → Zhaoke (HK) → Kwangdong","LENZ → Lotus (Taiwan) → Alvogen Korea","Orasis → Optus Pharma","N/A — domestic"),
+                ("Contract Signed","January 2024","May 2025","October 2025","N/A"),
+                ("MFDS NDA Filed","September 2025 ✓ (first in Korea)","December 2025 ✓","Not announced as of 2026","Indication trial planned 2–3 years"),
+                ("US FDA Approved","January 28, 2026","July 31, 2025","October 16, 2023","No — domestic only"),
+                ("Expected Korea Launch","2026 (regulatory lead)","2026","2026 (pending NDA)","~2028–2029"),
+                ("Duration","Up to 8 hours","Up to 10 hours","Up to 8 hours","~4–6 hours"),
+                ("Preservative","None (PF)","None (PF)","None (PF)","None (PF)"),
+                ("Key Differentiator","Only dual-agent FDC; lowest redness (2.8%); 12-month safety","Longest duration (10h); iris-selective; no brow ache; NCE","Lowest pilo conc (0.4%); PRN use; longest US track record","Only Korean-made; existing glaucoma network; off-label ongoing"),
+            ]
+            hd="".join(f"<th>{h}</th>" for h in ["Parameter","유베지 (YUVEZZI)","비즈 (VIZZ)","클로시 (QLOSI)","필로스타 (Pilostar)"])
+            krows=""
+            for row in KOREA_DATA:
+                cells=f"<td><b>{row[0]}</b></td>"
+                for i,v in enumerate(row[1:]):
+                    css_class=""
+                    if row[0]=="MFDS Status":
+                        css_class={"YUVEZZI":"s-review","VIZZ":"s-review","QLOSI":"s-pending","Pilostar":"s-launched"}.get(["YUVEZZI","VIZZ","QLOSI","Pilostar"][i],"")
+                    cells+=f"<td class='{css_class}'>{v}</td>"
+                krows+=f"<tr>{cells}</tr>"
+            st.markdown(f'<div style="overflow-x:auto"><table class="korea-tbl"><thead><tr>{hd}</tr></thead><tbody>{krows}</tbody></table></div>',unsafe_allow_html=True)
+
+            st.markdown("---")
+            st.markdown("#### Strategic dynamics")
+            sc1,sc2 = st.columns(2)
+            sc1.markdown(info_card("🏁 The MFDS approval race",
+                "<b>Kwangdong (YUVEZZI)</b> filed first (Sep 2025) — regulatory lead.<br><br>"
+                "<b>Alvogen Korea (VIZZ)</b> filed second (Dec 2025) — 3 months behind.<br><br>"
+                "<b>Optus Pharma (QLOSI)</b> has not yet filed — 6–12 months behind.<br><br>"
+                "<b>Daewoo (Pilostar)</b> on separate timeline — indication trial ~2028–2029.<br><br>"
+                "<span class='warn'>First-mover will establish prescriber habits and pharmacy relationships before competitors.</span>"),
+                unsafe_allow_html=True)
+            sc2.markdown(info_card("💡 Key competitive tensions",
+                "<b>Duration battleground:</b> VIZZ 10h vs YUVEZZI & QLOSI 8h — critical for working-age patients.<br><br>"
+                "<b>Side effects differentiate:</b> YUVEZZI → lowest redness; VIZZ → least brow ache; QLOSI → lowest pilo dose.<br><br>"
+                "<b>NHI reimbursement:</b> If classified as lifestyle drug, OOP pricing limits addressable market.<br><br>"
+                "<b>Daewoo long-term:</b> Only domestic manufacturer — cost and supply chain independence advantage."),
+                unsafe_allow_html=True)
+
+        with ks2:
+            st.markdown("#### Korea myopia + presbyopia treatment market size")
+            st.info("No presbyopia-only sub-segment data exists — these figures are for the combined myopia + presbyopia treatment market including lenses and surgery.", icon="ℹ️")
+            for yr,val,bar,note in [
+                ("2023","$411.7M",33,"Grand View Research / Horizon Databook"),
+                ("2025","$631.6M",51,"Expert Market Research (EMR)"),
+                ("2030","$885.9M",71,"Grand View Research — CAGR 11.6%"),
+                ("2035","$1,242.5M",100,"Expert Market Research — CAGR 7.0%"),
+            ]:
+                st.markdown(f'<div style="display:flex;align-items:center;gap:12px;margin-bottom:10px;">'
+                            f'<div style="width:50px;font-size:12px;font-weight:600;color:#374151;">{yr}</div>'
+                            f'<div style="flex:1"><div class="bar-track"><div class="bar-fill" style="width:{bar}%;background:#185FA5;"></div></div></div>'
+                            f'<div style="width:100px;font-size:13px;font-weight:700;color:#111827;">{val}</div>'
+                            f'<div style="font-size:10px;color:#9098b0;">{note}</div></div>',unsafe_allow_html=True)
+            st.markdown('<p class="source-note">CAGR 11.6% (2024–2030, Grand View Research); 7.0% (2025–2035, EMR). ⚠️ Presbyopia-only drug sub-segment is pre-commercial — no revenue data exists. Market figures are combined myopia + presbyopia.</p>',unsafe_allow_html=True)
+
+        with ks3:
+            st.markdown("#### Demand drivers")
+            for d_item in MARKET_KOREA["drivers"]:
+                st.markdown(f"✅ {d_item}")
+            st.markdown("---")
+            st.markdown("#### Patient population derivation")
+            st.markdown(f'<div class="info-card"><div class="info-card-title">How ~16–17M was calculated</div><div class="info-card-value">{MARKET_KOREA["est_basis"]}</div></div>',unsafe_allow_html=True)
+            st.markdown("#### Super-aged society context")
+            sc1,sc2 = st.columns(2)
+            sc1.markdown(info_card("Demographics","Korea declared a 'super-aged' society in Dec 2024 — >20% of population aged ≥65. Median age 46.2 years (Worldometer 2026). UN projects >45% of population will be ≥60 by 2050."),unsafe_allow_html=True)
+            sc2.markdown(info_card("Screen time factor","Korea has world's highest smartphone penetration. Digital eye strain compounding age-related near vision loss — increasing effective demand from patients in their 40s, earlier than historical presbyopia onset."),unsafe_allow_html=True)
+
+        with ks4:
+            st.markdown("#### Korea presbyopia market timeline")
+            for date,dot_col,text in [
+                ("Jan 2024","#0d6b35","Kwangdong signs Korea exclusive YUVEZZI license from Zhaoke Ophthalmology"),
+                ("May 2025","#185FA5","Alvogen Korea signs VIZZ distribution license (LENZ → Lotus → Alvogen)"),
+                ("Jul 2025","#185FA5","VIZZ receives US FDA approval — strengthens Korea NDA dossier"),
+                ("Sep 2025","#0d6b35","Kwangdong files MFDS NDA for YUVEZZI — first presbyopia NDA in Korea"),
+                ("Oct 2025","#a05c00","Optus Pharma signs QLOSI license (₩24B contract)"),
+                ("Dec 2025","#185FA5","Alvogen Korea files MFDS NDA for VIZZ — second presbyopia NDA in Korea"),
+                ("Nov 2025","#374151","Daewoo launches Pilostar (glaucoma indication) + announces indication expansion plan"),
+                ("Jan 2026","#0d6b35","YUVEZZI receives US FDA approval — reinforces Kwangdong MFDS dossier"),
+                ("2026 (est.)","#0d6b35","First MFDS presbyopia approval expected — Korean market opens"),
+                ("2026–2027","#185FA5","QLOSI MFDS filing and expected approval — 3-way commercial competition"),
+                ("2028–2029","#374151","Daewoo indication-expansion trial expected to complete — domestic product enters"),
+            ]:
+                st.markdown(f'<div class="tl-row"><div class="tl-date">{date}</div><div class="tl-dot" style="background:{dot_col}"></div><div class="tl-text">{text}</div></div>',unsafe_allow_html=True)
+            st.markdown('<p class="source-note">Sources: Company press releases, MFDS public records, PharmKorea, investor communications.</p>',unsafe_allow_html=True)
     st.markdown('<p class="page-header">Korea Market Intelligence</p>',unsafe_allow_html=True)
     st.markdown("## 🇰🇷 Korean Presbyopia Eye Drop Market")
     st.markdown(f"<p style='color:#5a5f78;font-size:14px;margin-bottom:4px;'>As of June 2026, <b>no presbyopia eye drop has received MFDS approval in Korea</b>. The market is pre-commercial, with 3 NDAs under active review. Patient population estimate is derived (see footnote).</p>",unsafe_allow_html=True)
@@ -869,94 +1069,6 @@ elif view_mode == "🇰🇷 Korea Market":
         st.markdown(f'<div class="tl-row"><div class="tl-date">{date}</div><div class="tl-dot" style="background:{dot_col}"></div><div class="tl-text">{text}</div></div>',unsafe_allow_html=True)
 
     st.markdown('<p class="source-note">Sources: Statistics Korea 2024; Worldometer 2026; WHO/Fricke et al. Ophthalmology 2018 (prevalence); Expert Market Research; Grand View Research; company press releases.</p>',unsafe_allow_html=True)
-
-# ─────────────────────────────────────────────
-# VIEW: GLOBAL MARKET
-# ─────────────────────────────────────────────
-elif view_mode == "🌍 Global Market":
-    st.markdown('<p class="page-header">Global Presbyopia Market Intelligence</p>',unsafe_allow_html=True)
-    st.markdown("## 🌍 Global Presbyopia Treatment Market")
-
-    # Headline stats
-    c1,c2,c3,c4 = st.columns(4)
-    for col,(num,unit,lab,cagr,src) in zip([c1,c2,c3,c4],[
-        ("1.8B","people","Global presbyopes (2024)","→ 2.1B by 2030","WHO / Fricke et al. Ophthalmology 2018"),
-        ("$10.2B","USD","Total treatment market (2024)","CAGR 5.5% → $16.8B by 2033","Straits Research 2024"),
-        ("$1.31B","USD","Eye drops segment (2024)","CAGR 9.2% → $2.86B by 2033","Dataintelo 2024"),
-        ("12.8%","CAGR","Pharmacological drug fastest","Fastest-growing treatment sub-segment","Emergen Research 2025"),
-    ]):
-        col.markdown(f'<div class="mkt-card"><div class="info-card-title">{lab}</div>'
-                     f'<div><span class="mkt-num">{num}</span><span class="mkt-unit">{unit}</span></div>'
-                     f'<div class="mkt-cagr">{cagr}</div>'
-                     f'<div class="mkt-source">{src}</div></div>',unsafe_allow_html=True)
-
-    st.markdown("---")
-    c1,c2 = st.columns([1.2,0.8])
-    with c1:
-        st.markdown("### Market size trajectory")
-        for yr,val,bar,note in [
-            ("2023","$8.14B",46,"DataM Intelligence"),
-            ("2024","$10.17B",58,"Straits Research"),
-            ("2025","$10.91B",62,"Straits Research (est.)"),
-            ("2028","~$13B",74,"Interpolated"),
-            ("2033","$16.77B",95,"Straits Research forecast"),
-        ]:
-            st.markdown(f'<div style="display:flex;align-items:center;gap:12px;margin-bottom:8px;">'
-                        f'<div style="width:50px;font-size:12px;font-weight:600;color:#374151;">{yr}</div>'
-                        f'<div style="flex:1"><div class="bar-track"><div class="bar-fill" style="width:{bar}%;background:#534AB7;"></div></div></div>'
-                        f'<div style="width:80px;font-size:13px;font-weight:700;color:#111827;">{val}</div>'
-                        f'<div style="font-size:10px;color:#9098b0;">{note}</div></div>',unsafe_allow_html=True)
-
-        st.markdown("### Eye drops segment (pharmacological only)")
-        for yr,val,bar,note in [
-            ("2024","$1.31B",46,"Dataintelo — first year of meaningful commercial market"),
-            ("2026","~$1.56B",55,"Estimated — YUVEZZI, VIZZ newly launched"),
-            ("2028","~$1.86B",65,"Estimated"),
-            ("2033","$2.86B",100,"Dataintelo forecast"),
-        ]:
-            st.markdown(f'<div style="display:flex;align-items:center;gap:12px;margin-bottom:8px;">'
-                        f'<div style="width:50px;font-size:12px;font-weight:600;color:#374151;">{yr}</div>'
-                        f'<div style="flex:1"><div class="bar-track"><div class="bar-fill" style="width:{bar}%;background:#0F6E56;"></div></div></div>'
-                        f'<div style="width:80px;font-size:13px;font-weight:700;color:#111827;">{val}</div>'
-                        f'<div style="font-size:10px;color:#9098b0;">{note}</div></div>',unsafe_allow_html=True)
-
-    with c2:
-        st.markdown("### Regional eye drop market share (2024)")
-        for region,pct,val,cagr,col in [
-            ("North America",42,"~$550M","8.5%","#534AB7"),
-            ("Europe",29,"~$380M","~6.0%","#185FA5"),
-            ("Asia Pacific",20,"~$262M","11.2% — fastest","#0F6E56"),
-            ("Rest of World",9,"~$118M","—","#9098b0"),
-        ]:
-            st.markdown(f'<div style="display:flex;align-items:center;gap:10px;margin-bottom:8px;">'
-                        f'<div style="width:110px;font-size:12px;color:#374151;">{region}</div>'
-                        f'<div style="flex:1"><div class="bar-track"><div class="bar-fill" style="width:{pct}%;background:{col};"></div></div></div>'
-                        f'<div style="width:36px;font-size:12px;font-weight:700;color:#111827;">{pct}%</div>'
-                        f'<div style="width:55px;font-size:11px;color:#6b7280;">{val}</div>'
-                        f'<div style="font-size:10px;color:#0d6b35;font-weight:600;">{cagr}</div></div>',unsafe_allow_html=True)
-
-        st.markdown("### CAGR by segment")
-        for seg,cagr,col in [
-            ("Eye drops (pharma)","9.2%","#0F6E56"),
-            ("Pharmacological drugs","12.8%","#0d6b35"),
-            ("Asia Pacific regional","11.2%","#185FA5"),
-            ("Total treatment market","5.5%","#534AB7"),
-            ("Korea (myopia+presbyopia)","11.6%","#A32D2D"),
-        ]:
-            pct = int(cagr.replace("%","").replace("~",""))
-            st.markdown(f'<div style="display:flex;align-items:center;gap:10px;margin-bottom:7px;">'
-                        f'<div style="width:160px;font-size:12px;color:#374151;">{seg}</div>'
-                        f'<div style="flex:1"><div class="bar-track"><div class="bar-fill" style="width:{min(pct*6,100)}%;background:{col};"></div></div></div>'
-                        f'<div style="font-size:13px;font-weight:700;color:#111827;">{cagr}</div></div>',unsafe_allow_html=True)
-
-    st.markdown("---")
-    st.markdown("### Key demand drivers & market dynamics")
-    c1,c2,c3 = st.columns(3)
-    c1.markdown(info_card("Demographics","Global population ≥40 years is growing rapidly. WHO: 1.8B presbyopes in 2024 → 2.1B by 2030. Asia Pacific has largest absolute numbers; Western markets have highest per-capita spending."),unsafe_allow_html=True)
-    c2.markdown(info_card("Regulatory acceleration","4 FDA-approved drops in 5 years (2021–2026). Phentolamine (5th) PDUFA Oct 2026. Regulatory precedent now established — faster pathways for new entrants. Korea, EU, Japan approval races actively underway."),unsafe_allow_html=True)
-    c3.markdown(info_card("Unmet needs driving growth","85%+ of presbyopes still rely on glasses. Pharmacological drops remain <1% of presbyopia management. The gap is the opportunity — but requires patient education and prescriber behaviour change. Reimbursement is the key remaining barrier."),unsafe_allow_html=True)
-
-    st.markdown('<p class="source-note">Market data sources: Straits Research (2024 total market), Dataintelo (eye drops segment), Emergen Research (pharma segment CAGR), Dataintelo (regional breakdown), Grand View Research (Korea), Expert Market Research (Korea 2025–2035). WHO / Fricke TR et al. Ophthalmology. 2018;125:1492–1499 (global prevalence). All figures USD. Last updated June 2026.</p>',unsafe_allow_html=True)
 
 # ─────────────────────────────────────────────
 # FOOTER
